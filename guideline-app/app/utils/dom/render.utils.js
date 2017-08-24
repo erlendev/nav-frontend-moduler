@@ -40,12 +40,12 @@ const renderComponent = (c, attrs, children) => {
         const componentChildren = children.map((currentChild, key) => {
             if (currentChild.component) {
                 return (renderComponent(
-                    currentChild.component,
-                    {
-                        key: key,
-                        ... currentChild.attrs
-                    },
-                    currentChild.children)
+                        currentChild.component,
+                        {
+                            key: key,
+                            ... currentChild.attrs
+                        },
+                        currentChild.children)
                 );
             }
             else {
@@ -68,7 +68,7 @@ const renderComponent = (c, attrs, children) => {
     });
 };
 
-const getAttributesFromModifiers = (modifiers) => {
+const getAttributesFromModifiersOnRoot = (modifiers) => {
     let modifierAttrs = {};
     modifiers.forEach(
         (modif) => {
@@ -87,19 +87,52 @@ const getAttributesFromModifiers = (modifiers) => {
     return modifierAttrs;
 };
 
+const getAttributesFromModifiersOnType = (type) => {
+    const modifiers = type.modifiers;
+
+    if (modifiers && Array.isArray(modifiers) && modifiers.length > 0) {
+        return modifiers.filter((modifier) => (!modifier.component && modifier.value));
+    }
+
+    return [];
+};
+
+const getActiveModifierAttribute = (modifier) => {
+    if (modifier) {
+        if (!modifier.component && modifier.value) {
+            return {
+                [modifier.value]: true
+            }
+        }
+    }
+    return {};
+};
+
 const mergeAttrs = (attrs1, attrs2) => (Object.assign({}, attrs1, attrs2));
 
-export const renderComponentWithModifiersAndChildren = (type, modifiers, children, shallowRender = false) => {
-    const component = type.component;
+export const renderComponentWithModifiersAndChildren =
+    (type,
+     multipleChoiceModifiers,
+     activeModifier,
+     children,
+     shallowRender = false) => {
 
-    if (component) {
-        const typeAttrs = type.attrs;
-        const modifierAttrs = getAttributesFromModifiers(modifiers);
+        const component = type.component;
+        const modifiersOnType = getAttributesFromModifiersOnType(type);
 
-        if (shallowRender) {
-            return shallow(renderComponent(component, mergeAttrs(typeAttrs, modifierAttrs), children));
+        if (component) {
+            let typeAttrs = type.attrs;
+            if (activeModifier) {
+                let foundModifier = modifiersOnType.find((modifier) => (modifier.value === activeModifier.value));
+                typeAttrs = { ... typeAttrs, ... getActiveModifierAttribute(foundModifier) };
+            }
+
+            const modifierAttrs = getAttributesFromModifiersOnRoot(multipleChoiceModifiers);
+            if (shallowRender) {
+                return shallow(renderComponent(component, mergeAttrs(typeAttrs, modifierAttrs), children));
+            }
+
+            return renderComponent(component, mergeAttrs(typeAttrs, modifierAttrs), children);
         }
 
-        return renderComponent(component, mergeAttrs(typeAttrs, modifierAttrs), children);
-    }
-};
+    };

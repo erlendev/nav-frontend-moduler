@@ -70,7 +70,7 @@ export const newType = (component, label, children, attrs = {}, modifs) => {
     }
 };
 
-export const newSingleChoiceModifier = (component, value) => {
+export const newSingleChoiceModifierWithComponent = (component, value) => {
     return {
         component: component,
         label: toFirstUpper(value),
@@ -78,9 +78,16 @@ export const newSingleChoiceModifier = (component, value) => {
     }
 };
 
+export const newSingleChoiceModifierWithAttribute = (value, label) => {
+    return {
+        label: toFirstUpper(label),
+        value: value
+    }
+};
+
 export const newMultipleChoiceModifier = (value, label) => {
     return {
-        label: label,
+        label: toFirstUpper(label),
         value: value
     }
 };

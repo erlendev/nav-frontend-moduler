@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { EtikettLiten } from './../../../../../../../packages/node_modules/nav-frontend-typografi';
 
 import { SampleEditor } from './SampleEditor';
-import { sampleTypeChange, activeRefChange } from '../../../../../redux/actions/sampleActions';
+import { sampleTypeChange, activeRefChange, sampleModifierChange } from '../../../../../redux/actions/sampleActions';
 import { renderComponentWithModifiersAndChildren } from './../../../../../utils/dom/render.utils';
 
 import './styles.less';
@@ -21,14 +21,18 @@ export class Sample extends Component {
     componentDidUpdate(previousProps) {
         const componentData = this.props.componentData;
         const activeType = this.props.activeType;
+        const activeModifier = this.props.activeModifier;
 
         if (componentData.modifiers && componentData.modifiers.length > 0 && this.props.activeModifier) {
             const typeMatch = this.getTypeMatchingCurrentActiveModifier();
-            if (typeMatch && typeMatch.component !== activeType.component) {
+            if (typeMatch && typeMatch.component && typeMatch.component !== activeType.component) {
                 this.changeActiveType({
                     type: typeMatch,
                     resetModifiers: previousProps.componentName !== this.props.componentName
                 });
+            }
+            else if (activeModifier && typeMatch && activeModifier.value !== typeMatch.value) {
+                sampleModifierChange(typeMatch);
             }
         }
     }
@@ -91,6 +95,7 @@ export class Sample extends Component {
         const component = renderComponentWithModifiersAndChildren(
             this.props.activeType,
             this.props.activeMultipleChoiceModifiers,
+            this.props.activeModifier,
             this.props.activeType.children || ''
         );
 

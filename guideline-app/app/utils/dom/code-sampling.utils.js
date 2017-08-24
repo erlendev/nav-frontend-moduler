@@ -10,7 +10,7 @@ export const sanitizeHtml = (html, options = {}) => {
     return DOMPurify.sanitize(html, options);
 };
 
-export const getShallowComponent = (component, modifiers, children) => (renderComponentWithModifiersAndChildren(component, modifiers, children, true));
+export const getShallowComponent = (component, modifiers, children) => (renderComponentWithModifiersAndChildren(component, modifiers, {}, children, true));
 
 export const getHtmlCodeForComponent = (component, activeModifiers, children) => {
     const shallowComponent = getShallowComponent(component, activeModifiers, children);
@@ -21,7 +21,7 @@ export const getHtmlCodeForComponent = (component, activeModifiers, children) =>
 };
 
 export const getReactCodeForComponent = (component, activeModifiers, children) => {
-    const jsxMainComponent = renderComponentWithModifiersAndChildren(component, activeModifiers, children);
+    const jsxMainComponent = renderComponentWithModifiersAndChildren(component, activeModifiers, {}, children);
     return jsxToString(jsxMainComponent);
 };
 

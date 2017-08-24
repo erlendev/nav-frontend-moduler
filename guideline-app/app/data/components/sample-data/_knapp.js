@@ -8,19 +8,24 @@ import KnappBase,
 import {
     createSampleData,
     newType,
-    newMultipleChoiceModifier
+    newSingleChoiceModifierWithAttribute
 } from './../sampleDataHelper';
 
 const commonChild = 'Slik ser en knapp ut';
-const types = [
-    newType(Knapp, 'Sekundærknapp', commonChild),
-    newType(Hovedknapp, 'Hovedknapp', commonChild),
-    newType(Fareknapp, 'Fareknapp', commonChild)
-];
+
 const modifiers = [
-    newMultipleChoiceModifier('mini', 'Mini'),
-    newMultipleChoiceModifier('spinner', 'Spinner'),
-    newMultipleChoiceModifier('disabled', 'Disabled')
+    newSingleChoiceModifierWithAttribute('mini', 'Mini'),
+    newSingleChoiceModifierWithAttribute('spinner', 'Spinner'),
+    newSingleChoiceModifierWithAttribute('disabled', 'Disabled')
 ];
 
-export default createSampleData(types, modifiers, KnappBase);
+const types = [
+    newType(Knapp, 'Sekundærknapp', commonChild, {}, modifiers),
+    newType(Hovedknapp, 'Hovedknapp', commonChild, {}, modifiers),
+    newType(Fareknapp, 'Fareknapp', commonChild, {}, modifiers)
+];
+
+const data = createSampleData(types, [], KnappBase);
+console.log(data);
+
+export default data;

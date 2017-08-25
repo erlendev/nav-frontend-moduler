@@ -1,4 +1,4 @@
-import { createSampleData, newType, newMultipleChoiceModifier } from './../sampleDataHelper';
+import { createSampleData, newType, newModifier } from './../sampleDataHelper';
 
 import {
     Textarea
@@ -6,8 +6,8 @@ import {
 
 const types = [ newType(Textarea, 'Vanlig', null, { label: 'Textarea-label', onChange: () => {}, value: '' })];
 const modifiers = [
-    newMultipleChoiceModifier('disabled', 'Disabled'),
-    newMultipleChoiceModifier({
+    newModifier('disabled', 'Disabled'),
+    newModifier({
         feil: {
             feilmelding: 'Her ble det feil'
         }

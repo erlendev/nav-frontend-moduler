@@ -5,18 +5,14 @@ import KnappBase,
     Fareknapp
 } from 'NavFrontendModules/nav-frontend-knapper';
 
-import {
-    createSampleData,
-    newType,
-    newSingleChoiceModifierWithAttribute
-} from './../sampleDataHelper';
+import { createSampleData, newType, newModifier } from './../sampleDataHelper';
 
 const commonChild = 'Slik ser en knapp ut';
 
 const modifiers = [
-    newSingleChoiceModifierWithAttribute('mini', 'Mini'),
-    newSingleChoiceModifierWithAttribute('spinner', 'Spinner'),
-    newSingleChoiceModifierWithAttribute('disabled', 'Disabled')
+    newModifier('mini', 'Mini'),
+    newModifier('spinner', 'Spinner'),
+    newModifier('disabled', 'Disabled')
 ];
 
 const types = [
@@ -25,7 +21,4 @@ const types = [
     newType(Fareknapp, 'Fareknapp', commonChild, {}, modifiers)
 ];
 
-const data = createSampleData(types, [], KnappBase);
-console.log(data);
-
-export default data;
+export default createSampleData(types, [], KnappBase);

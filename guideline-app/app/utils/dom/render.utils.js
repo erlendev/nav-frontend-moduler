@@ -68,22 +68,34 @@ const renderComponent = (c, attrs, children) => {
     });
 };
 
+const setupModifierValue = (modifier) => {
+    const value = modifier.value;
+    if (typeof value !== 'object') {
+        return { [modifier.value] : true };
+    }
+
+    let attrs = {};
+    const keys = Object.keys(value);
+    keys.forEach((key) => {
+        attrs[key] = value[key];
+    });
+    return attrs;
+};
+
 const getAttributesFromModifiersOnRoot = (modifiers) => {
     let modifierAttrs = {};
-    modifiers.forEach(
-        (modif) => {
-            const value = modif.value;
-            if (typeof value !== 'object') {
-                modifierAttrs[value] = true;
-            }
-            else {
-                const keys = Object.keys(modif.value);
-                keys.forEach((key) => {
-                    modifierAttrs[key] = value[key];
-                });
-            }
+    modifiers.forEach((modifier) => {
+        const value = modifier.value;
+        if (typeof value !== 'object') {
+            modifierAttrs[modifier.value] = true;
         }
-    );
+        else {
+            const keys = Object.keys(modifier.value);
+            keys.forEach((key) => {
+                modifierAttrs[key] = value[key];
+            });
+        }
+    });
     return modifierAttrs;
 };
 
@@ -91,21 +103,20 @@ const getAttributesFromModifiersOnType = (type) => {
     const modifiers = type.modifiers;
 
     if (modifiers && Array.isArray(modifiers) && modifiers.length > 0) {
-        return modifiers.filter((modifier) => (!modifier.component && modifier.value));
+        return modifiers
+            .filter((modifier) => (!modifier.component && modifier.value)).map(setupModifierValue);
     }
 
     return [];
 };
 
-const getActiveModifierAttribute = (modifier) => {
-    if (modifier) {
-        if (!modifier.component && modifier.value) {
-            return {
-                [modifier.value]: true
-            }
+const findModifierMatchingActiveModifier = (modifiers, activeModifier) => {
+    return modifiers.find((modifier) => {
+        if (typeof activeModifier.value === 'object') {
+            return Object.keys(activeModifier.value).some((key) => (modifier[key]));
         }
-    }
-    return {};
+        return modifier[activeModifier.value];
+    });
 };
 
 const mergeAttrs = (attrs1, attrs2) => (Object.assign({}, attrs1, attrs2));
@@ -123,11 +134,14 @@ export const renderComponentWithModifiersAndChildren =
         if (component) {
             let typeAttrs = type.attrs;
             if (activeModifier) {
-                let foundModifier = modifiersOnType.find((modifier) => (modifier.value === activeModifier.value));
-                typeAttrs = { ... typeAttrs, ... getActiveModifierAttribute(foundModifier) };
+                let matchingModifier = findModifierMatchingActiveModifier(modifiersOnType, activeModifier);
+                typeAttrs = { ... typeAttrs, ... matchingModifier };
             }
 
             const modifierAttrs = getAttributesFromModifiersOnRoot(multipleChoiceModifiers);
+
+            console.log('All attributes', mergeAttrs(typeAttrs, modifierAttrs));
+
             if (shallowRender) {
                 return shallow(renderComponent(component, mergeAttrs(typeAttrs, modifierAttrs), children));
             }

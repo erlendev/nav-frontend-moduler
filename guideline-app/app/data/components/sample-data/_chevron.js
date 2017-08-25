@@ -8,7 +8,7 @@ import Chevron, {
 import {
     createSampleData,
     newType,
-    newMultipleChoiceModifier
+    newModifier
 } from './../sampleDataHelper';
 
 const types = [
@@ -18,7 +18,7 @@ const types = [
     newType(NedChevron, 'Ned')
 ];
 const modifiers = [
-    newMultipleChoiceModifier('stor', 'Stor')
+    newModifier('stor', 'Stor')
 ];
 
 export default createSampleData(types, modifiers, Chevron);

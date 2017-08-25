@@ -5,16 +5,16 @@ import AlertStripe, {
     AlertStripeInfoSolid,
     AlertStripeAdvarsel
 } from 'NavFrontendModules/nav-frontend-alertstriper';
-import { createSampleData, newType, newSingleChoiceModifierWithComponent } from './../sampleDataHelper';
+import { createSampleData, newType, newModifier } from './../sampleDataHelper';
 
 const commonChild = 'Slik ser en Alertstripe ut';
 
 const types = [
     newType(AlertStripeSuksess, 'Suksess', commonChild, {}, [
-        newSingleChoiceModifierWithComponent(AlertStripeSuksessSolid, 'solid')
+        newModifier(AlertStripeSuksessSolid, 'solid')
     ]),
     newType(AlertStripeInfo, 'Info', commonChild, {}, [
-        newSingleChoiceModifierWithComponent(AlertStripeInfoSolid, 'solid')
+        newModifier(AlertStripeInfoSolid, 'solid')
     ]),
     newType(AlertStripeAdvarsel, 'Advarsel', commonChild)
 ];

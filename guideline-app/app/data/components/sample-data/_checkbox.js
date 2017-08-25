@@ -5,7 +5,7 @@ import {
 import {
     createSampleData,
     newType,
-    newMultipleChoiceModifier
+    newModifier
 } from './../sampleDataHelper';
 
 const feilAttrs = { feil: { feilmelding: 'Feil!' } };
@@ -13,6 +13,6 @@ const types = [
     newType(Checkbox, 'Vanlig', null, { label: 'Checkboxfelt-label' }),
     newType(Checkbox, 'Med feilmelding', null, { label: 'Checkboxfelt-label', ... feilAttrs })
 ];
-const modifiers = [ newMultipleChoiceModifier('disabled', 'Disabled') ];
+const modifiers = [ newModifier('disabled', 'Disabled') ];
 
 export default createSampleData(types, modifiers);

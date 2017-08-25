@@ -25,6 +25,7 @@ export class SampleEditor extends Component {
     }
 
     dispatchActiveTypeChanged(type) {
+        console.log('TypeChange', type);
         this.props.dispatch(sampleTypeChange({
             type: type
         }));
@@ -47,6 +48,8 @@ export class SampleEditor extends Component {
         if (!activeType.component && sample.component) {
             return sample._default;
         }
+
+        console.log(activeType, sample, activeType === sample);
         return activeType === sample || this.hasChangedModifier(sample);
     }
 
@@ -127,7 +130,7 @@ const SampleType = (props) => {
             name="sampleTypeRadio"
             value={ sample.component.name }
             checked={ context.typeIsChecked(sample) || false }
-            onChange={ () => context.dispatchActiveTypeChanged(sample) }
+            onChange={ () => { context.dispatchActiveTypeChanged(sample) } }
         />
     )
 };

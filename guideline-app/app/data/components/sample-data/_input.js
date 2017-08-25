@@ -5,22 +5,18 @@ import {
 import {
     createSampleData,
     newType,
-    newMultipleChoiceModifier
+    newModifier
 } from './../sampleDataHelper';
 
 const inputSizes = ['fullbredde', 'XXS', 'XS', 'S', 'L', 'XL', 'XXL'];
-const types = inputSizes.map((inputSize) => (
-    newType(
-        Input, inputSize, null, { label: 'Inputfelt-label', bredde: inputSize.toLowerCase() }
-    )
-));
 const modifiers = [
-    newMultipleChoiceModifier('disabled', 'Disabled'),
-    newMultipleChoiceModifier({
-        feil: {
-            feilmelding: 'Her ble det feil gitt'
-        }
-    }, 'Med feil')
+    newModifier('disabled', 'Disabled'),
+    newModifier({ feil: { feilmelding: 'Her ble det feil gitt' } }, 'Med feil')
 ];
+const types = inputSizes.map((inputSize) => (
+    newType(Input, inputSize, null, { label: 'Inputfelt-label', bredde: inputSize.toLowerCase() }, modifiers)
+));
 
-export default createSampleData(types, modifiers);
+const data = createSampleData(types);
+
+export default data;

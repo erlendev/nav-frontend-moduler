@@ -7,7 +7,7 @@ import {
 import {
     createSampleData,
     newType,
-    newMultipleChoiceModifier
+    newModifier
 } from './../sampleDataHelper';
 
 const options = [
@@ -27,8 +27,8 @@ const types = selectSizes.map((selectSize) => {
     return newType(Select, selectSize, optionChildren(), attrs);
 });
 const modifiers = [
-    newMultipleChoiceModifier('disabled', 'Disabled'),
-    newMultipleChoiceModifier({
+    newModifier('disabled', 'Disabled'),
+    newModifier({
         feil: {
             feilmelding: 'Her ble det feil altså.'
         }

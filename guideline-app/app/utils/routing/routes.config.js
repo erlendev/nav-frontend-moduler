@@ -1,4 +1,3 @@
-import React from 'react';
 import Loadable from 'react-loadable';
 import resolveComponentRoutes from './routes.utils';
 
@@ -12,9 +11,9 @@ import IconPage from '../../ui/containers/icon/IconPage';
 import ToneOfVoicePage from '../../ui/containers/toneofvoice/ToneOfVoicePage';
 import OurValuesPage from '../../ui/containers/our-values/OurValuesPage';
 import StyleMainPage from '../../ui/containers/style/StyleMainPage';
+import Loader from '../../../../sandbox/components/loader/Loader';
 
 const componentRoutes = resolveComponentRoutes('components');
-import Loader from './../../ui/components/loader/Loader';
 
 const LoadableSandboxPage = Loadable({
     loader: () => import(/* webpackChunkName: "sandbox" */ '../../ui/containers/sandbox/SandboxPage'),

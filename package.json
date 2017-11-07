@@ -24,7 +24,7 @@
     "buildstorybook": "build-storybook -o dist",
     "deploystorybook": "gh-pages -d dist",
     "start": "start-storybook -p 6006",
-    "dev": "npm start",
+    "dev": "webpack-dev-server --hot --inline --config sandbox/conf/webpack.conf.js",
     "watch": "npm start",
     "start-guideline-app": "webpack-dev-server --hot --inline --config guideline-app/conf/webpack.dev.js",
     "build-guideline-app": "webpack -p --config guideline-app/conf/webpack.production.js",

@@ -44,10 +44,6 @@ export default TestComp;`;
 function getInitialState(props) {
     let initialCode = testScript;
 
-    if (props.match.params.urlCode && props.match.params.urlCode.length > 0) {
-        initialCode = LZString.decompressFromEncodedURIComponent(props.match.params.urlCode);
-    }
-
     return {
         value: initialCode,
         compiledComponent: compile(initialCode)

@@ -1,6 +1,5 @@
 const path = require('path');
 const WebpackDevConfig = require('./_webpack.global');
-const DirectoryNamedWebpackPlugin = require('directory-named-webpack-plugin');
 
 const htmlRule = {
     test: /\.html$/,

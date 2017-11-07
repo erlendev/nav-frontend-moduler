@@ -1,8 +1,8 @@
 import React from 'react';
 import './styles.less';
 
-const open = "{";
-const close = "}";
+const open = '{';
+const close = '}';
 
 function LoaderAnimation() {
     return (
@@ -20,9 +20,8 @@ function Loading(props) {
         return <LoaderAnimation />;
     } else if (props.pastDelay) {
         return <LoaderAnimation />;
-    } else {
-        return null;
     }
+    return null;
 }
 
 export default Loading;

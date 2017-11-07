@@ -38,12 +38,28 @@ const isolatedScope = [
     'history'
 ];
 
+//<pre className="sandboxPage__feilmelding">
+const tryCatchString = `
+exports.default = function() {
+  try {
+    return _default();
+  } catch (inscriptError) {
+    console.error('inscriptError', inscriptError);
+    return _react.default.createElement('pre', { className: 'sandboxPage__feilmelding' }, inscriptError.toString());
+  }
+};
+`;
+
+function tryCatch(code) {
+    return code.replace('exports.default = _default;', tryCatchString);
+}
+
 export default function compile(code) {
     const startTime = performance.now();
     const warnings = [];
     try {
         const compiled = Babel.transform(code, { presets: ["es2015", "react", "stage-2"]});
-        const run = new Function('require', 'exports', 'importlist', ...isolatedScope, compiled.code);
+        const run = new Function('require', 'exports', 'importlist', ...isolatedScope, tryCatch(compiled.code));
         const out = {};
         const mockrequire = (req) => {
             const res = mainfiles[req];
@@ -62,6 +78,7 @@ export default function compile(code) {
         }
         return { component: out.default, warnings, time };
     } catch (e) {
+        console.log('cauth compile error', e);
         const endTime = performance.now();
         const time = endTime - startTime;
         return { error: prettystack(e.stack), warnings, time };

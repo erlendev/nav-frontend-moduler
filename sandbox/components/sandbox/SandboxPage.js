@@ -60,7 +60,9 @@ class SandboxPage extends Component {
     compileScript = _throttle((newCode) => {
         const compiledComponent = compile(newCode);
         const urlCode = LZString.compressToEncodedURIComponent(newCode);
-        this.props.history.replace(`/sandbox/${urlCode}`);
+        if (this.props.history) {
+            this.props.history.replace(`/sandbox/${urlCode}`);
+        }
         this.setState({ compiledComponent });
     }, 100);
 

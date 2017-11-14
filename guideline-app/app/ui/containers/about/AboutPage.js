@@ -5,13 +5,14 @@ import {
     Sidetittel,
     Undertittel
 } from './../../../../../packages/node_modules/nav-frontend-typografi';
-import designUtviklingPng from './../../../assets/images/about/designutvikling.png';
+import frontpageAnimation from './../../../assets/animation/frontpage.json';
+import Animation from './../../../ui/components/animation/Animation';
 import './styles.less';
 
 const AboutPage = () => (
     <div className="aboutPage">
         <div className="aboutPage__header">
-            <img src={designUtviklingPng} alt="" />
+            <Animation domId="frontpageAnimation" pathToJson={frontpageAnimation} />
         </div>
         <div className="aboutPage__content">
             <Sidetittel>NAV Designsystemet</Sidetittel>

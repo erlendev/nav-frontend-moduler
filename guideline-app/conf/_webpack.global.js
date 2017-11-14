@@ -24,6 +24,12 @@ const GlobalWebpackConfig = {
                 ]
             },
             {
+                test: /\.json$/,
+                use: [
+                    { loader: 'file-loader' }
+                ]
+            },
+            {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 include: [
